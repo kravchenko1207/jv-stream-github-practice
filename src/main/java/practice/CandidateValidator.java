@@ -12,11 +12,11 @@ public class CandidateValidator implements Predicate<Candidate> {
         if (c == null) {
             return false;
         }
-        if (c.getAge() <= MIN_AGE_EXCLUSIVE) {
+        if (c.getAge() < MIN_AGE_EXCLUSIVE) {
             return false;
         }
-        if (c.isAllowedToVote()) {
-            return true;
+        if (!c.isAllowedToVote()) {
+            return false;
         }
         String nat = c.getNationality();
         if (nat == null || !REQUIRED_NAT.equalsIgnoreCase(nat.trim())) {
