@@ -1,8 +1,8 @@
 package practice;
 
-import model.Candidate;
-
 import java.util.function.Predicate;
+
+import model.Candidate;
 
 public class CandidateValidator implements Predicate<Candidate> {
     private static final int MIN_AGE_EXCLUSIVE = 35;
@@ -26,7 +26,6 @@ public class CandidateValidator implements Predicate<Candidate> {
         }
         return yearsInUkraine(c.getPeriodsInUkr()) >= MIN_YEARS_IN_UA;
     }
-
 
     private int yearsInUkraine(String period) {
         if (period == null) {
