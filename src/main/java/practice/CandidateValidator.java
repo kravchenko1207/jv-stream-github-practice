@@ -1,10 +1,11 @@
 package practice;
 
 import java.util.function.Predicate;
+
 import model.Candidate;
 
 public class CandidateValidator implements Predicate<Candidate> {
-    private static final int MIN_AGE_EXCLUSIVE = 35;
+    private static final int MIN_AGE = 35;
     private static final int MIN_YEARS_IN_UA = 10;
     private static final String REQUIRED_NAT = "Ukrainian";
 
@@ -12,18 +13,14 @@ public class CandidateValidator implements Predicate<Candidate> {
         if (c == null) {
             return false;
         }
-        if (c.getAge() < MIN_AGE_EXCLUSIVE) {
-            return false;
-        }
-        if (!c.isAllowedToVote()) {
-            return false;
-        }
-        String nat = c.getNationality();
-        if (nat == null || !REQUIRED_NAT.equalsIgnoreCase(nat.trim())) {
-            return false;
+        return c.getAge() >= MIN_AGE
+                && c.isAllowedToVote()
+                && isUkrainian(c.getNationality())
+                && yearsInUkraine(c.getPeriodsInUkr()) >= MIN_YEARS_IN_UA;
+    }
 
-        }
-        return yearsInUkraine(c.getPeriodsInUkr()) >= MIN_YEARS_IN_UA;
+    private boolean isUkrainian(String nat) {
+        return nat != null && REQUIRED_NAT.equalsIgnoreCase(nat.trim());
     }
 
     private int yearsInUkraine(String period) {
